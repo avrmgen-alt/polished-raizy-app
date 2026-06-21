@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  name        String
+  blurb       String
+  description String
+  price       Int
+  isAddon     Boolean @default(false)
+  order       Int     @default(0)
+}
+
+model GalleryPhoto {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  serviceId   String
+  serviceName String
+  addons      String
+  date        String
+  time        String
+  name        String
+  phone       String
+  email       String
+  notes       String?
+  depositPaid Int
+  stripeId    String?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  email     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model FaqItem {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String?
+  published Boolean  @default(false)
+  order     Int      @default(0)
+  source    String   @default("admin")
+  createdAt DateTime @default(now())
+}

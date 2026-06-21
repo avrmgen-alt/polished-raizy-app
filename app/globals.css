@@ -1,26 +1,29 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-pbr-bg: #EFE6D9;
+  --color-pbr-dark: #473C30;
+  --color-pbr-accent: #A8927C;
+  --color-pbr-card: #FBF7F1;
+  --color-pbr-warm: #E7DBC9;
+  --color-pbr-muted: #6E6253;
+  --color-pbr-faint: #9C8B77;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Jost', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #EFE6D9; color: #473C30; font-family: 'Jost', sans-serif; -webkit-font-smoothing: antialiased; }
+::selection { background: #E3CBBD; color: #473C30; }
+input, textarea, button { font-family: inherit; }
+input:focus, textarea:focus { outline: none; }
+::placeholder { color: #A89A88; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@keyframes pbrRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pbrFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pbrFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+.animate-rise { animation: pbrRise 0.9s cubic-bezier(.16,1,.3,1) both; }
+.animate-fade { animation: pbrFade 1.4s ease both; }
+.animate-float { animation: pbrFloat 6s ease-in-out infinite; }
