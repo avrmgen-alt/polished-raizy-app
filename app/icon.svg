@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 180">
+  <!-- cap -->
+  <rect x="8" y="0" width="28" height="38" rx="6" fill="#C9A0A0"/>
+  <!-- neck -->
+  <rect x="15" y="36" width="14" height="16" rx="3" fill="#D4AEAE"/>
+  <!-- body -->
+  <rect x="0" y="50" width="44" height="80" rx="10" fill="#E8C4C4"/>
+  <!-- shine -->
+  <rect x="8" y="58" width="10" height="40" rx="4" fill="rgba(255,255,255,0.38)"/>
+  <!-- label band -->
+  <rect x="0" y="90" width="44" height="22" fill="#D4AEAE" opacity="0.55"/>
+  <!-- brush handle -->
+  <rect x="20" y="128" width="4" height="30" rx="2" fill="#C9A0A0"/>
+  <!-- brush tip -->
+  <ellipse cx="22" cy="163" rx="4" ry="8" fill="#B8869A"/>
+  <!-- paint drop -->
+  <ellipse cx="22" cy="174" rx="3" ry="4" fill="#B8869A" opacity="0.7"/>
+</svg>
