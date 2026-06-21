@@ -50,10 +50,6 @@ export default async function HomePage() {
           <div className="relative w-full max-w-[400px]" style={{ borderRadius: '220px 220px 16px 16px', overflow: 'hidden', aspectRatio: '4/5', boxShadow: '0 30px 70px -30px rgba(71,60,48,.45)' }}>
             <Image src="/images/hero.jpeg" alt="Certified Russian manicure" fill style={{ objectFit: 'cover' }} priority />
           </div>
-          <div className="animate-float absolute hidden sm:flex flex-col items-center justify-center" style={{ background: '#FBF7F1', border: '1px solid rgba(71,60,48,.12)', borderRadius: 999, width: 110, height: 110, boxShadow: '0 18px 40px -18px rgba(71,60,48,.4)', right: '4%', bottom: '18%' }}>
-            <span style={{ fontFamily: 'var(--font-cormorant)', fontStyle: 'italic', fontSize: 28, color: '#A8927C', lineHeight: 1 }}>est.</span>
-            <span style={{ fontFamily: 'var(--font-jost)', fontSize: 10, letterSpacing: '0.28em', color: '#6E6253', marginTop: 4 }}>2024</span>
-          </div>
         </div>
       </section>
 
