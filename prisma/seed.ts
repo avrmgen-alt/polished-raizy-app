@@ -24,6 +24,7 @@ async function main() {
     { key: 'studioPhone', value: '' },
     { key: 'studioIg', value: '@polishedbyraizy' },
     { key: 'studioHours', value: 'By appointment' },
+    { key: 'heroImage', value: '' },
     { key: 'depositAmount', value: '1000' },
     { key: 'notificationEmail', value: '' },
     { key: 'stripePublishableKey', value: '' },

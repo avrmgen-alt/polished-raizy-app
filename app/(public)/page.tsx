@@ -18,7 +18,7 @@ const aftercare = [
 ]
 
 export default async function HomePage() {
-  const s = await getSettings(['heroLine1', 'heroLine2', 'heroCopy'])
+  const s = await getSettings(['heroLine1', 'heroLine2', 'heroCopy', 'heroImage'])
   const services = await prisma.service.findMany({ where: { isAddon: false }, orderBy: { order: 'asc' } })
   const photos = await prisma.galleryPhoto.findMany({ orderBy: { order: 'asc' }, take: 4 })
   const signature = services[0]
@@ -48,7 +48,12 @@ export default async function HomePage() {
         </div>
         <div className="animate-fade relative flex justify-center">
           <div className="relative w-full max-w-[400px]" style={{ borderRadius: '220px 220px 16px 16px', overflow: 'hidden', aspectRatio: '4/5', boxShadow: '0 30px 70px -30px rgba(71,60,48,.45)' }}>
-            <Image src="/images/hero.jpeg" alt="Certified Russian manicure" fill style={{ objectFit: 'cover' }} priority />
+            {(s.heroImage && s.heroImage.startsWith('data:')) ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={s.heroImage} alt="Certified Russian manicure" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <Image src={s.heroImage || '/images/hero.jpeg'} alt="Certified Russian manicure" fill style={{ objectFit: 'cover' }} priority />
+            )}
           </div>
         </div>
       </section>
