@@ -28,7 +28,7 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside style={{ width: 220, background: '#473C30', minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'fixed', top: 0, left: 0, zIndex: 40 }} className="hidden sm:flex">
+      <aside style={{ width: 220, background: '#473C30', minHeight: '100vh', flexDirection: 'column', position: 'fixed', top: 0, left: 0, zIndex: 40 }} className="hidden sm:flex">
         <div style={{ padding: '28px 20px 20px' }}>
           <div style={{ fontFamily: 'var(--font-jost)', fontSize: 8, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#A8927C', marginBottom: 4 }}>Nails</div>
           <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 18, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F4EEE4', fontWeight: 500 }}>Polished by Raizy</div>
