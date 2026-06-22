@@ -24,9 +24,18 @@ export default function ContentAdmin() {
   useEffect(() => { fetch('/api/admin/content').then(r => r.json()).then(data => { setValues(data); setLoading(false) }) }, [])
 
   const save = async () => {
-    await fetch('/api/admin/content', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) })
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    try {
+      const res = await fetch('/api/admin/content', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) })
+      if (res.ok) {
+        setSaved(true)
+        setTimeout(() => setSaved(false), 2000)
+      } else {
+        const text = await res.text()
+        alert('Save failed: ' + res.status + ' — ' + text)
+      }
+    } catch (e) {
+      alert('Network error: ' + e)
+    }
   }
 
   const uploadHeroImage = async (file: File) => {
