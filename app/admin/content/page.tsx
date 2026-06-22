@@ -45,12 +45,7 @@ export default function ContentAdmin() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, color: '#3C3328', margin: 0, fontWeight: 400 }}>Content</h1>
-        <button onClick={save} style={{ background: '#473C30', color: '#F4EEE4', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '10px 22px', borderRadius: 999, border: 'none', cursor: 'pointer' }}>
-          {saved ? '✓ Saved' : 'Save changes'}
-        </button>
-      </div>
+      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, color: '#3C3328', margin: '0 0 24px', fontWeight: 400 }}>Content</h1>
       <div style={{ background: '#FBF7F1', border: '1px solid rgba(71,60,48,.12)', borderRadius: 16, padding: '22px 20px' }}>
         <div className="flex flex-col gap-5">
           {FIELDS.map(f => (
@@ -77,6 +72,9 @@ export default function ContentAdmin() {
           ))}
         </div>
       </div>
+      <button onClick={save} style={{ marginTop: 20, width: '100%', background: '#473C30', color: '#F4EEE4', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '14px', borderRadius: 999, border: 'none', cursor: 'pointer' }}>
+        {saved ? '✓ Saved' : 'Save changes'}
+      </button>
     </div>
   )
 }
