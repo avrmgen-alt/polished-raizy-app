@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-const CONTENT_KEYS = ['heroLine1', 'heroLine2', 'heroCopy', 'aboutCopy1', 'aboutCopy2', 'studioLocation', 'studioPhone', 'studioIg', 'studioHours']
+const CONTENT_KEYS = ['heroLine1', 'heroLine2', 'heroCopy', 'heroImage', 'aboutCopy1', 'aboutCopy2', 'studioLocation', 'studioPhone', 'studioIg', 'studioHours']
 
 export async function GET() {
   const rows = await prisma.setting.findMany({ where: { key: { in: CONTENT_KEYS } } })
