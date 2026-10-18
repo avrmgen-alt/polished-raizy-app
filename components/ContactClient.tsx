@@ -1,7 +1,13 @@
 'use client'
 import { useState } from 'react'
 
-export default function ContactClient({ studio }: { studio: Record<string, string> }) {
+export default function ContactClient({
+  studio,
+  slug,
+}: {
+  studio: Record<string, string>
+  slug?: string
+}) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
@@ -9,10 +15,12 @@ export default function ContactClient({ studio }: { studio: Record<string, strin
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const contactEndpoint = slug ? `/${slug}/api/contact` : '/api/contact'
+
   const submit = async () => {
     if (!name.trim() || !email.trim() || !message.trim()) return
     setLoading(true)
-    await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, phone, email, message }) })
+    await fetch(contactEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, phone, email, message }) })
     setSent(true)
     setLoading(false)
   }

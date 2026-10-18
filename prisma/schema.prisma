@@ -6,31 +6,62 @@ datasource db {
   provider = "sqlite"
 }
 
+model Salon {
+  id                   String    @id @default(cuid())
+  name                 String
+  slug                 String    @unique
+  businessType         String    @default("nail_salon")
+  ownerEmail           String    @unique
+  ownerPasswordHash    String
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  subscriptionStatus   String    @default("trialing")
+  trialEndsAt          DateTime?
+  createdAt            DateTime  @default(now())
+
+  settings        Setting[]
+  services        Service[]
+  galleryPhotos   GalleryPhoto[]
+  bookings        Booking[]
+  contactMessages ContactMessage[]
+  faqItems        FaqItem[]
+}
+
 model Setting {
-  key   String @id
-  value String
+  id      String @id @default(cuid())
+  salonId String
+  key     String
+  value   String
+  salon   Salon  @relation(fields: [salonId], references: [id])
+
+  @@unique([salonId, key])
 }
 
 model Service {
   id          String  @id @default(cuid())
+  salonId     String
   name        String
   blurb       String
   description String
   price       Int
   isAddon     Boolean @default(false)
   order       Int     @default(0)
+  salon       Salon   @relation(fields: [salonId], references: [id])
 }
 
 model GalleryPhoto {
   id        String   @id @default(cuid())
+  salonId   String
   url       String
   caption   String
   order     Int      @default(0)
   createdAt DateTime @default(now())
+  salon     Salon    @relation(fields: [salonId], references: [id])
 }
 
 model Booking {
   id          String   @id @default(cuid())
+  salonId     String
   serviceId   String
   serviceName String
   addons      String
@@ -44,24 +75,29 @@ model Booking {
   stripeId    String?
   status      String   @default("pending")
   createdAt   DateTime @default(now())
+  salon       Salon    @relation(fields: [salonId], references: [id])
 }
 
 model ContactMessage {
   id        String   @id @default(cuid())
+  salonId   String
   name      String
   phone     String?
   email     String
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
+  salon     Salon    @relation(fields: [salonId], references: [id])
 }
 
 model FaqItem {
   id        String   @id @default(cuid())
+  salonId   String
   question  String
   answer    String?
   published Boolean  @default(false)
   order     Int      @default(0)
   source    String   @default("admin")
   createdAt DateTime @default(now())
+  salon     Salon    @relation(fields: [salonId], references: [id])
 }

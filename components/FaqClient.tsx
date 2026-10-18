@@ -9,7 +9,13 @@ const aftercare = [
   'Book your fill appointment 3–4 weeks after your initial set.',
 ]
 
-export default function FaqClient({ faqs }: { faqs: { id: string; question: string; answer: string | null }[] }) {
+export default function FaqClient({
+  faqs,
+  slug,
+}: {
+  faqs: { id: string; question: string; answer: string | null }[]
+  slug?: string
+}) {
   const [open, setOpen] = useState<string | null>(null)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -17,10 +23,12 @@ export default function FaqClient({ faqs }: { faqs: { id: string; question: stri
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const faqEndpoint = slug ? `/${slug}/api/faq-question` : '/api/faq-question'
+
   const submit = async () => {
     if (!question.trim() || !email.trim()) return
     setLoading(true)
-    await fetch('/api/faq-question', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, question }) })
+    await fetch(faqEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, question }) })
     setSent(true)
     setLoading(false)
   }

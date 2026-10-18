@@ -3,24 +3,27 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-const nav = [
-  { href: '/admin/bookings', label: 'Bookings', icon: '📅' },
-  { href: '/admin/gallery', label: 'Gallery', icon: '🖼' },
-  { href: '/admin/services', label: 'Services', icon: '💅' },
-  { href: '/admin/faq', label: 'FAQ', icon: '💬' },
-  { href: '/admin/messages', label: 'Messages', icon: '✉️' },
-  { href: '/admin/content', label: 'Content', icon: '✏️' },
-  { href: '/admin/settings', label: 'Settings', icon: '⚙️' },
-]
+function buildNav(slug: string) {
+  return [
+    { href: `/${slug}/admin/bookings`, label: 'Bookings', icon: '📅' },
+    { href: `/${slug}/admin/gallery`, label: 'Gallery', icon: '🖼' },
+    { href: `/${slug}/admin/services`, label: 'Services', icon: '💅' },
+    { href: `/${slug}/admin/faq`, label: 'FAQ', icon: '💬' },
+    { href: `/${slug}/admin/messages`, label: 'Messages', icon: '✉️' },
+    { href: `/${slug}/admin/content`, label: 'Content', icon: '✏️' },
+    { href: `/${slug}/admin/settings`, label: 'Settings', icon: '⚙️' },
+  ]
+}
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ slug }: { slug: string }) {
   const pathname = usePathname()
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const nav = buildNav(slug)
 
   const logout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' })
-    router.push('/admin/login')
+    await fetch(`/${slug}/api/auth/logout`, { method: 'POST' })
+    router.push(`/${slug}/admin/login`)
   }
 
   const current = nav.find(n => pathname.startsWith(n.href))
@@ -30,9 +33,9 @@ export default function AdminSidebar() {
       {/* Desktop sidebar */}
       <aside style={{ width: 220, background: '#473C30', minHeight: '100vh', flexDirection: 'column', position: 'fixed', top: 0, left: 0, zIndex: 40 }} className="hidden sm:flex">
         <div style={{ padding: '28px 20px 20px' }}>
-          <div style={{ fontFamily: 'var(--font-jost)', fontSize: 8, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#A8927C', marginBottom: 4 }}>Nails</div>
-          <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 18, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F4EEE4', fontWeight: 500 }}>Polished by Raizy</div>
-          <div style={{ fontSize: 10, color: '#9C8B77', marginTop: 3, letterSpacing: '0.1em' }}>Admin</div>
+          <div style={{ fontFamily: 'var(--font-jost)', fontSize: 8, letterSpacing: '0.42em', textTransform: 'uppercase', color: '#A8927C', marginBottom: 4 }}>BookDesk</div>
+          <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 18, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F4EEE4', fontWeight: 500 }}>Admin Panel</div>
+          <div style={{ fontSize: 10, color: '#9C8B77', marginTop: 3, letterSpacing: '0.1em' }}>{slug}</div>
         </div>
         <div style={{ height: 1, background: 'rgba(255,255,255,.1)', margin: '0 16px' }} />
         <nav style={{ flex: 1, padding: '14px 10px' }}>
@@ -44,7 +47,7 @@ export default function AdminSidebar() {
         </nav>
         <div style={{ padding: '16px 10px' }}>
           <div style={{ height: 1, background: 'rgba(255,255,255,.1)', marginBottom: 12 }} />
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10, textDecoration: 'none', color: '#9C8B77', fontSize: 12, marginBottom: 4 }}>
+          <Link href={`/${slug}/`} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10, textDecoration: 'none', color: '#9C8B77', fontSize: 12, marginBottom: 4 }}>
             ← View site
           </Link>
           <button onClick={logout} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10, background: 'none', border: 'none', color: '#9C8B77', fontSize: 12, cursor: 'pointer', width: '100%' }}>
@@ -56,7 +59,7 @@ export default function AdminSidebar() {
       {/* Mobile top bar */}
       <div className="sm:hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: '#473C30', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', height: 56 }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 16, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F4EEE4', fontWeight: 500 }}>Polished by Raizy</div>
+          <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 16, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F4EEE4', fontWeight: 500 }}>Admin</div>
           {current && <div style={{ fontSize: 10, color: '#A8927C', letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: 1 }}>{current.label}</div>}
         </div>
         <button onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: '#F4EEE4', fontSize: 22, lineHeight: 1 }}>
@@ -64,7 +67,7 @@ export default function AdminSidebar() {
         </button>
       </div>
 
-      {/* Mobile drawer overlay */}
+      {/* Mobile drawer */}
       {open && (
         <div className="sm:hidden" style={{ position: 'fixed', inset: 0, zIndex: 49 }} onClick={() => setOpen(false)}>
           <div style={{ position: 'absolute', top: 56, left: 0, right: 0, background: '#473C30', borderBottom: '1px solid rgba(255,255,255,.1)', padding: '10px 12px 16px' }} onClick={e => e.stopPropagation()}>
@@ -74,7 +77,7 @@ export default function AdminSidebar() {
               </Link>
             ))}
             <div style={{ height: 1, background: 'rgba(255,255,255,.1)', margin: '10px 0' }} />
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 14px', borderRadius: 10, textDecoration: 'none', color: '#9C8B77', fontSize: 14 }}>
+            <Link href={`/${slug}/`} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 14px', borderRadius: 10, textDecoration: 'none', color: '#9C8B77', fontSize: 14 }}>
               ← View site
             </Link>
             <button onClick={logout} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '11px 14px', borderRadius: 10, background: 'none', border: 'none', color: '#9C8B77', fontSize: 14, cursor: 'pointer', width: '100%' }}>

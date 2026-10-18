@@ -18,9 +18,9 @@ function getDays() {
 }
 
 export default function BookingClient({
-  services, addons, depositCents, stripePk
+  services, addons, depositCents, stripePk, slug, salonName
 }: {
-  services: Service[]; addons: Service[]; depositCents: number; stripePk: string
+  services: Service[]; addons: Service[]; depositCents: number; stripePk: string; slug: string; salonName?: string
 }) {
   const [step, setStep] = useState(1)
   const [serviceId, setServiceId] = useState(services[0]?.id || '')
@@ -50,7 +50,7 @@ export default function BookingClient({
     setSubmitting(true)
     setError('')
     try {
-      const res = await fetch('/api/booking', {
+      const res = await fetch(`/${slug}/api/booking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -199,11 +199,11 @@ export default function BookingClient({
                 <div style={{ fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#fff', background: '#A8927C', padding: '3px 8px', borderRadius: 999 }}>Secured by Stripe</div>
               </div>
               <div style={{ background: '#E7DBC9', border: '1px solid rgba(71,60,48,.12)', borderRadius: 10, padding: '14px 16px', marginBottom: 8 }}>
-                {stripePk ? (
-                  <div style={{ fontSize: 14, color: '#6E6253', fontWeight: 300 }}>Stripe payment will be processed at confirmation. A {fmt(depositCents)} deposit holds your slot.</div>
-                ) : (
-                  <div style={{ fontSize: 14, color: '#9C8B77', fontWeight: 300 }}>Stripe is not yet configured. Your booking request will be confirmed manually.</div>
-                )}
+                <div style={{ fontSize: 14, color: '#6E6253', fontWeight: 300 }}>
+                  {stripePk
+                    ? `A ${fmt(depositCents)} deposit holds your slot and is applied to your service.`
+                    : `Your request will be reviewed and confirmed by ${salonName || 'the studio'}. No payment required to submit.`}
+                </div>
               </div>
               <div style={{ fontSize: 12, fontWeight: 300, color: '#9C8B77' }}>A {fmt(depositCents)} deposit confirms your slot &amp; is applied to your service.</div>
             </div>
@@ -236,11 +236,11 @@ export default function BookingClient({
           <div style={{ width: 60, height: 60, borderRadius: 999, background: '#A8927C', color: '#F4EEE4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, margin: '0 auto 20px' }}>✓</div>
           <h2 style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 400, fontSize: 34, color: '#3C3328', margin: '0 0 10px' }}>Request received</h2>
           <p style={{ fontWeight: 300, fontSize: 15, lineHeight: 1.7, color: '#6E6253', maxWidth: 420, margin: '0 auto 24px' }}>
-            Thank you, {name}. Your appointment request for {service?.name} on {date?.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} at {time} has been received. Raizy will confirm shortly — your deposit holds the slot.
+            Thank you, {name}. Your appointment request for {service?.name} on {date?.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} at {time} has been received. {salonName || 'The studio'} will confirm shortly.
           </p>
           <div className="inline-flex gap-3 flex-wrap justify-center">
             <button onClick={() => { setStep(1); setDone(false); setName(''); setEmail(''); setPhone(''); setNotes(''); setDate(null); setTime(null); setSelectedAddons([]) }} style={{ border: '1px solid rgba(71,60,48,.3)', color: '#473C30', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 24px', borderRadius: 999, background: 'none', cursor: 'pointer' }}>Book another</button>
-            <a href="/" style={{ display: 'inline-block', background: '#473C30', color: '#F4EEE4', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 24px', borderRadius: 999, textDecoration: 'none' }}>Back home</a>
+            <a href={`/${slug}/`} style={{ display: 'inline-block', background: '#473C30', color: '#F4EEE4', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 24px', borderRadius: 999, textDecoration: 'none' }}>Back home</a>
           </div>
         </div>
       )}

@@ -5,16 +5,18 @@ interface FooterProps {
   phone: string
   ig: string
   hours: string
+  slug?: string
 }
 
-export default function Footer({ location, phone, ig, hours }: FooterProps) {
+export default function Footer({ location, phone, ig, hours, slug }: FooterProps) {
+  const base = slug ? `/${slug}` : ''
   const links = [
-    { href: '/', label: 'Home' },
-    { href: '/services', label: 'Services' },
-    { href: '/about', label: 'About' },
-    { href: '/gallery', label: 'Gallery' },
-    { href: '/faq', label: 'FAQ' },
-    { href: '/contact', label: 'Contact' },
+    { href: `${base}/`, label: 'Home' },
+    { href: `${base}/services`, label: 'Services' },
+    { href: `${base}/about`, label: 'About' },
+    { href: `${base}/gallery`, label: 'Gallery' },
+    { href: `${base}/faq`, label: 'FAQ' },
+    { href: `${base}/contact`, label: 'Contact' },
   ]
 
   return (
@@ -46,7 +48,7 @@ export default function Footer({ location, phone, ig, hours }: FooterProps) {
         </div>
         <div style={{ borderTop: '1px solid rgba(255,255,255,.08)', paddingTop: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <span style={{ fontSize: 12, fontWeight: 300, color: '#9C8B77' }}>© {new Date().getFullYear()} Polished by Raizy</span>
-          <Link href="/admin/login" className="no-underline" style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#6E6253' }}>Owner access</Link>
+          <Link href={slug ? `/${slug}/admin/login` : '/admin/login'} className="no-underline" style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#6E6253' }}>Owner access</Link>
         </div>
       </div>
     </footer>

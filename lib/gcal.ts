@@ -1,27 +1,25 @@
 import { google } from 'googleapis'
 import { getSettings, setSetting } from './settings'
 
-export async function createCalendarEvent(booking: {
+export async function createCalendarEvent(salonId: string, booking: {
   name: string; email: string; serviceName: string; addons: string; date: string; time: string; notes?: string | null
 }) {
-  const s = await getSettings(['gcalClientId', 'gcalClientSecret', 'gcalAccessToken', 'gcalRefreshToken', 'gcalCalendarId'])
+  const s = await getSettings(salonId, ['gcalClientId', 'gcalClientSecret', 'gcalAccessToken', 'gcalRefreshToken', 'gcalCalendarId'])
   if (!s.gcalClientId || !s.gcalAccessToken) return
 
   const oauth2 = new google.auth.OAuth2(s.gcalClientId, s.gcalClientSecret)
   oauth2.setCredentials({ access_token: s.gcalAccessToken, refresh_token: s.gcalRefreshToken })
 
-  // Refresh token if needed
   oauth2.on('tokens', async (tokens) => {
-    if (tokens.access_token) await setSetting('gcalAccessToken', tokens.access_token)
-    if (tokens.refresh_token) await setSetting('gcalRefreshToken', tokens.refresh_token)
+    if (tokens.access_token) await setSetting(salonId, 'gcalAccessToken', tokens.access_token)
+    if (tokens.refresh_token) await setSetting(salonId, 'gcalRefreshToken', tokens.refresh_token)
   })
 
   const calendar = google.calendar({ version: 'v3', auth: oauth2 })
 
-  // Parse start time from "9:30 AM" + date "2026-06-20"
   const [datePart] = [booking.date]
   const startDt = parseDateTime(datePart, booking.time)
-  const endDt = new Date(startDt.getTime() + 90 * 60 * 1000) // 90 min default
+  const endDt = new Date(startDt.getTime() + 90 * 60 * 1000)
 
   const addons = (() => { try { return JSON.parse(booking.addons) } catch { return [] } })()
 
