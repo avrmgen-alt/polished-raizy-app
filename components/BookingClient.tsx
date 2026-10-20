@@ -100,7 +100,7 @@ export default function BookingClient({
       {step === 1 && (
         <div style={{ background: '#FBF7F1', border: '1px solid rgba(71,60,48,.12)', borderRadius: 20, padding: '30px 28px' }}>
           <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#3C3328', marginBottom: 5 }}>Choose your service</div>
-          <div style={{ fontWeight: 300, fontSize: 14, color: '#6E6253', marginBottom: 18 }}>Every appointment begins with a certified Russian manicure.</div>
+          <div style={{ fontWeight: 300, fontSize: 14, color: '#6E6253', marginBottom: 18 }}>Select a service to get started.</div>
           {services.map(s => (
             <div key={s.id} onClick={() => setServiceId(s.id)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '18px 20px', borderRadius: 12, border: `1px solid ${serviceId === s.id ? '#473C30' : 'rgba(71,60,48,.12)'}`, background: serviceId === s.id ? 'rgba(71,60,48,.04)' : '#FBF7F1', marginBottom: 10, flexWrap: 'wrap' }}>
               <div>
@@ -190,7 +190,7 @@ export default function BookingClient({
               </div>
               <div>
                 <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#9C8B77', marginBottom: 5 }}>Notes (optional)</div>
-                <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Inspo, shape, length…" rows={2} style={{ width: '100%', background: '#EFE6D9', border: '1px solid rgba(71,60,48,.14)', borderRadius: 10, padding: '12px 14px', fontSize: 14, color: '#3C3328', resize: 'vertical', fontFamily: 'inherit' }} />
+                <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any special requests or notes…" rows={2} style={{ width: '100%', background: '#EFE6D9', border: '1px solid rgba(71,60,48,.14)', borderRadius: 10, padding: '12px 14px', fontSize: 14, color: '#3C3328', resize: 'vertical', fontFamily: 'inherit' }} />
               </div>
             </div>
             <div style={{ marginTop: 20, paddingTop: 18, borderTop: '1px solid rgba(71,60,48,.12)' }}>

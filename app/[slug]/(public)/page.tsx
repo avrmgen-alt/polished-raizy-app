@@ -23,7 +23,7 @@ export default async function SalonHomePage({ params }: { params: Promise<{ slug
         <div className="animate-rise">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-pbr-accent" />
-            <span style={{ fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#A8927C' }}>Clean · Structured · Refined</span>
+            <span style={{ fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#A8927C' }}>By appointment only</span>
           </div>
           <h1 style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 400, fontSize: 'clamp(42px,6vw,74px)', lineHeight: 1.02, color: '#3C3328', margin: '0 0 22px' }}>
             {s.heroLine1 || salon.name}<br />
@@ -41,7 +41,10 @@ export default async function SalonHomePage({ params }: { params: Promise<{ slug
               // eslint-disable-next-line @next/next/no-img-element
               <img src={s.heroImage} alt={salon.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
             ) : (
-              <Image src={s.heroImage || '/images/hero.jpeg'} alt={salon.name} fill style={{ objectFit: 'cover' }} priority />
+              {s.heroImage
+                ? <Image src={s.heroImage} alt={salon.name} fill style={{ objectFit: 'cover' }} priority />
+                : <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg,#E5D3C9,#C4A882)' }} />
+              }
             )}
           </div>
         </div>
@@ -71,7 +74,7 @@ export default async function SalonHomePage({ params }: { params: Promise<{ slug
       {/* Gallery teaser */}
       <section className="max-w-[1200px] mx-auto px-5 sm:px-7 py-16">
         <div className="flex items-end justify-between gap-5 mb-8">
-          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 400, fontSize: 'clamp(28px,4vw,44px)', color: '#3C3328', margin: 0 }}>Recent work</h2>
+          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 400, fontSize: 'clamp(28px,4vw,44px)', color: '#3C3328', margin: 0 }}>Gallery</h2>
           <Link href={`/${slug}/gallery`} style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#473C30', paddingBottom: 4, borderBottom: '1px solid #A8927C', textDecoration: 'none', whiteSpace: 'nowrap' }}>View gallery →</Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
@@ -91,7 +94,7 @@ export default async function SalonHomePage({ params }: { params: Promise<{ slug
       <section className="max-w-[1200px] mx-auto px-5 sm:px-7 pb-20">
         <div style={{ background: '#473C30', borderRadius: 22, padding: 'clamp(40px,6vw,64px) clamp(24px,4vw,48px)', textAlign: 'center' }}>
           <p style={{ fontFamily: 'var(--font-cormorant)', fontStyle: 'italic', fontSize: 'clamp(24px,4vw,40px)', lineHeight: 1.25, color: '#F4EEE4', maxWidth: 640, margin: '0 auto 26px' }}>
-            "Slots fill up quickly — reserve the chair that&apos;s truly yours."
+            "Slots fill up quickly — reserve the time that&apos;s truly yours."
           </p>
           <Link href={`/${slug}/booking`} style={{ display: 'inline-block', background: '#F4EEE4', color: '#473C30', fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '15px 32px', borderRadius: 999, textDecoration: 'none' }}>
             Reserve your appointment

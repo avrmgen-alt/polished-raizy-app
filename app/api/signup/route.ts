@@ -25,6 +25,11 @@ const DEFAULT_SETTINGS: Record<string, Record<string, string>> = {
     heroCopy: 'Lash extensions and lifts crafted for your eye shape and lifestyle.',
     aboutTitle: 'The Studio', aboutBody: 'We specialize in natural-looking lash enhancements tailored to you.',
   },
+  other: {
+    heroLine1: 'Book your', heroLine2: 'appointment.',
+    heroCopy: 'Professional service by appointment. Easy online booking.',
+    aboutTitle: 'About Us', aboutBody: 'We look forward to seeing you. Book online or reach out to learn more.',
+  },
 }
 
 export async function POST(req: NextRequest) {
@@ -50,7 +55,7 @@ export async function POST(req: NextRequest) {
   })
 
   // Seed default settings for this business type
-  const defaults = DEFAULT_SETTINGS[businessType] ?? DEFAULT_SETTINGS.nail_salon
+  const defaults = DEFAULT_SETTINGS[businessType] ?? DEFAULT_SETTINGS.other
   await Promise.all(Object.entries(defaults).map(([key, value]) =>
     prisma.setting.upsert({
       where: { salonId_key: { salonId: salon.id, key } },

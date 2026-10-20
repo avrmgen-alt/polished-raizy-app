@@ -21,7 +21,7 @@ export default async function AdminLayout({
   const owner = token ? verifyOwnerToken(token) : null
 
   if (!owner || owner.slug !== slug) {
-    redirect(`/${slug}/login`)
+    redirect(`/${slug}/admin/login`)
   }
 
   const showBanner = salon.subscriptionStatus === 'trialing' && !!process.env.STRIPE_PRICE_ID

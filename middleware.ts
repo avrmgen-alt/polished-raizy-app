@@ -5,7 +5,7 @@ import { verifyOwnerToken } from './lib/auth'
 // Matches /<slug>/admin/<anything> but not /<slug>/admin/login
 const ADMIN_PATTERN = /^\/([^/]+)\/admin(\/(?!login).*)?$/
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   const match = pathname.match(ADMIN_PATTERN)

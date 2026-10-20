@@ -18,8 +18,8 @@ const jost = Jost({
 })
 
 export const metadata: Metadata = {
-  title: 'Polished by Raizy — Certified Russian Manicures',
-  description: 'Private nail studio in Toms River, NJ. Certified Russian manicures by appointment.',
+  title: 'BookDesk — Booking for Beauty & Service Businesses',
+  description: 'The booking platform built for nail salons, barbers, spas, lash studios, and more.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

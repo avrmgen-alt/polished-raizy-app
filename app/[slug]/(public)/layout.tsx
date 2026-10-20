@@ -31,7 +31,7 @@ export default async function PublicLayout({
       </div>
       <Nav slug={slug} salonName={salon.name} />
       <main>{children}</main>
-      <Footer location={s.studioLocation} phone={s.studioPhone} ig={s.studioIg} hours={s.studioHours} slug={slug} />
+      <Footer location={s.studioLocation} phone={s.studioPhone} ig={s.studioIg} hours={s.studioHours} slug={slug} salonName={salon.name} />
     </>
   )
 }
